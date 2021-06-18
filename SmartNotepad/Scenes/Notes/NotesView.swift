@@ -24,6 +24,25 @@ class NotesView: UIView{
     // MARK: - SetupViews -
     func setupViews(){
         backgroundColor = .white
+
+        addSubview(tableView)
+       // tableView.fillSuperview()
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview().inset(10)
+        }
     }
     // MARK: - UI Componets -
+    let tableView: UITableView = {
+        let tableView = UITableView()
+//        tableView.rowHeight = 70
+//        tableView.estimatedRowHeight = 70
+
+        tableView.tableFooterView = UIView()
+        
+//        tableView.separatorColor = .darkGray
+//        tableView.separatorStyle = .singleLine
+//        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return tableView
+    }()
+    
 }
