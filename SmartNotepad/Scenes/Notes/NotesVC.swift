@@ -17,8 +17,13 @@ class NotesVC: UIViewController{
     }
     //MARK: - SetupViews -
     func setupViews(){
-        self.view.backgroundColor = .red
+        self.view.addSubview(mainView)
+        mainView.fillSuperview()
     }
     //MARK: - UI Components -
+    let mainView: NotesView = {
+        let view = NotesView(frame: .zero)
+        return view
+    }()
 
 }

@@ -23,6 +23,7 @@ class NotesView: UIView{
     }
     // MARK: - SetupViews -
     func setupViews(){
+        backgroundColor = .white
     }
     // MARK: - UI Componets -
 }
