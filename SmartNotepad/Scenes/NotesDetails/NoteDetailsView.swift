@@ -22,6 +22,12 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         super.layoutSubviews()
         setupViews()
     }
+    func setNoteImageView(image: UIImage){
+        self.noteImageView.image = image
+        noteImageView.isHidden = false
+        addPhotoButton.isHidden = true
+        self.layoutIfNeeded()
+    }
     // MARK: - text view delegate -
     func textViewDidBeginEditing(_ textView: UITextView) {
         textViewPLaceholderLabel.isHidden = !(textView.text == nil || textView.text.isEmpty)
@@ -57,8 +63,10 @@ class NoteDetailsView: UIView, UITextViewDelegate{
 
         addLocationButton.anchor(size: CGSize(width: 0, height: 25))
         addPhotoButton.anchor(size: CGSize(width: 0, height: 25))
+        noteImageView.anchor(size: CGSize(width: 0, height: 150))
         locationPhotoStackView.addArrangedSubview(addLocationButton)
         locationPhotoStackView.addArrangedSubview(addPhotoButton)
+        locationPhotoStackView.addArrangedSubview(noteImageView)
 
         imageIconImageView.anchor(size: CGSize(width: 0, height: 25))
         locationIconImageView.anchor(size: CGSize(width: 0, height: 25))
@@ -87,18 +95,15 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         textField.attributedPlaceholder = NSAttributedString(string: "Note Title Here",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(0.7),
                                                                           NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
-        textField.attributedText = NSAttributedString(string: "",
-                                                      attributes: [NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                   NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
+        
+        textField.font = UIFont.boldSystemFont(ofSize: 17)
+        textField.textColor = .black
         return textField
     }()
 
     private let bodyTextView: UITextView = {
         let textView = UITextView()
-
-        textView.attributedText = NSAttributedString(string: "",
-                                                     attributes: [
-                                                                  NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)])
+        textView.font =  UIFont.systemFont(ofSize: 17)
         textView.textContainerInset = UIEdgeInsets(top: -3, left: -3, bottom: 0, right: 0)
         return textView
     }()
@@ -141,14 +146,14 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         stackView.spacing = 15
         return stackView
     }()
-    private let addLocationButton: UIButton = {
+    let addLocationButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add Location", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
         button.contentHorizontalAlignment = .leading
         return button
     }()
-    private let addPhotoButton: UIButton = {
+    let addPhotoButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add Photo", for: .normal)
         button.setTitleColor(.lightGray, for: .normal)
@@ -159,6 +164,7 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .lightGray
+        imageView.isHidden = true
         return imageView
     }()
 }

@@ -30,4 +30,20 @@ class Alert{
         }))
         screen.present(alert, animated: true, completion: nil)
     }
+    static func alertToOpenSettings(screen: UIViewController){
+        let alertController = UIAlertController(title: "Location Permission Required", message: "Please enable location permissions in settings.", preferredStyle: UIAlertController.Style.alert)
+
+
+        let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+            //Redirect to Settings app
+            UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+        })
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+        alertController.addAction(cancelAction)
+
+        alertController.addAction(okAction)
+
+        screen.present(alertController, animated: true, completion: nil)
+    }
 }

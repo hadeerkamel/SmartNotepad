@@ -27,7 +27,7 @@ class NoNotesTableViewCell: UITableViewCell {
         setupViews()
     }
     //MARK: - Actions -
-    @objc private func didTapAddButton(){
+    @objc private func addButtonDidTapped(){
         addButtonTapped?()
     }
     //MARK: - Setup views -
@@ -79,7 +79,7 @@ class NoNotesTableViewCell: UITableViewCell {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.contentEdgeInsets = UIEdgeInsets(top: 3, left: 7, bottom: 3, right: 7)
 
-        button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addButtonDidTapped), for: .touchUpInside)
         return button
     }()
 }

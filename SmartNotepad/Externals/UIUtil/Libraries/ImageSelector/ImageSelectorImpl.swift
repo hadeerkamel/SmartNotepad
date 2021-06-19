@@ -21,11 +21,15 @@ class ImageSelectorImpl: NSObject, ImageSelector, UIImagePickerControllerDelegat
 
     func pickImage(with inputs: ImageSelectorInputs) {
 
-
-
         delegate = inputs.delegate
         self.inputs = inputs
-        showActionSheet()
+        if inputs.source == .camera{
+            self.presentImagePicker(with: .camera)
+        }else if inputs.source == .photo{
+            self.presentImagePicker(with: .photo)
+        }else{
+            showActionSheet()
+        }
 
 
     }

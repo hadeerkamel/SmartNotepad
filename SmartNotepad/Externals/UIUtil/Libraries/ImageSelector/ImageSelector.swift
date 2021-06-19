@@ -13,7 +13,7 @@ protocol ImageSelector {
 }
 
 struct ImageSelectorInputs {
-  //let source: ImageSelectorSource
+    var source: ImageSelectorSource = .both
   let presentationStyle: ImageSelectorPresentationStyle
   let isAllowingEditting: Bool
   let delegate: ImageSelectorDelegate
@@ -22,11 +22,14 @@ struct ImageSelectorInputs {
 enum ImageSelectorSource {
   case photo
   case camera
-
+  case both
   var source: UIImagePickerController.SourceType {
-    switch self {
-    case .photo: return .photoLibrary
-    case .camera: return .camera
+    if self == .photo{
+        return .photoLibrary
+    }else if self == .camera{
+        return .camera
+    }else{
+        return .camera
     }
   }
 }

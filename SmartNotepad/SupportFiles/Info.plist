@@ -41,5 +41,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationUsageDescription</key>
+	<string>To add your location to the note</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>To add your location to the note</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To add your location to the note</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To add your location to the note</string>
 </dict>
 </plist>
