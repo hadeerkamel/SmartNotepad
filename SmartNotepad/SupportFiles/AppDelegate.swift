@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static func setRootViewController(){
         DispatchQueue.main.async {
             self.window = UIWindow(frame:UIScreen.main.bounds)
-            self.window?.rootViewController = NotesVC()
+            self.window?.rootViewController = UINavigationController(rootViewController:  NotesVC())
             self.window?.makeKeyAndVisible()
         }
     }
