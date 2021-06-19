@@ -17,8 +17,13 @@ class NoteDetailsVC: UIViewController{
     }
     //MARK: - SetupViews -
     func setupViews(){
+        self.view.backgroundColor = .white
+
         self.view.addSubview(mainView)
-        mainView.fillSuperview()
+        mainView.snp.makeConstraints { (make) in
+            make.top.equalTo(navigationController?.navigationBar.snp.bottom ?? view.snp.top).inset(-30)
+            make.leading.trailing.bottom.equalToSuperview().inset(30)
+        }
     }
     //MARK: - UI Components -
     let mainView: NoteDetailsView = {
