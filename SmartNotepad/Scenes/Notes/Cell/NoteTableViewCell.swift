@@ -22,13 +22,14 @@ class NoteTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     override func layoutSubviews() {
-        superview?.layoutSubviews()
+        super.layoutSubviews()
         setupViews()
     }
+
     //MARK: - Setup views -
     func setupViews(){
 
-        contentView.addSubview(contentStackView)
+        addSubview(contentStackView)
         contentStackView.snp.makeConstraints { (make) in
             make.top.bottom.leading.equalToSuperview().inset(10)
         }
@@ -50,14 +51,14 @@ class NoteTableViewCell: UITableViewCell {
     }
     //MARK: - UI Components -
 
-    let contentStackView: UIStackView = {
+   private let contentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         return stackView
     }()
-    let titleLabel: UILabel = {
+   private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .black
@@ -65,7 +66,7 @@ class NoteTableViewCell: UITableViewCell {
         return label
     }()
 
-    let bodyLabel: UILabel = {
+   private let bodyLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(15)
         label.textColor = .lightGray
@@ -73,14 +74,14 @@ class NoteTableViewCell: UITableViewCell {
         return label
     }()
 
-    let infoStackView: UIStackView = {
+   private let infoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 15
         return stackView
     }()
-    let nearstLabel: UILabel = {
+   private let nearstLabel: UILabel = {
         let label = UILabel()
         label.textColor = #colorLiteral(red: 0.3144574165, green: 0.8099127412, blue: 0.4401344061, alpha: 1)
         label.text = "Nearest".localized()
@@ -88,7 +89,7 @@ class NoteTableViewCell: UITableViewCell {
         return label
     }()
 
-    let locationIconImageView: RoundedImageView = {
+   private let locationIconImageView: RoundedImageView = {
         let imageView = RoundedImageView(frame: .zero)
         imageView.image = #imageLiteral(resourceName: "icons8-map-pin-25")
         imageView.tintColor = #colorLiteral(red: 0.2838516533, green: 0.4160010815, blue: 0.9994027019, alpha: 1)
@@ -98,7 +99,7 @@ class NoteTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    let imageIconImageView: UIImageView = {
+   private let imageIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "image")
