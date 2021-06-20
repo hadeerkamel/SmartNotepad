@@ -8,7 +8,7 @@
 import UIKit
 class NotesVC: UIViewController{
     //MARK: - Propertis -
-    var data: [Int] = []
+    var data: [NoteModel] = []
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,11 @@ class NotesVC: UIViewController{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         self.navigationController?.setNavigationBarHidden(data.isEmpty, animated: false)
+
+        data = NotesPresistance.data
+        tableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -35,13 +39,15 @@ class NotesVC: UIViewController{
         setupViews()
     }
     //MARK: - Actions -
-    func didTapAddButton(){
-        self.navigationController?.pushViewController(NoteDetailsVC(), animated: true)
+    @objc func didTapAddButton(){
+        self.navigationController?.pushViewController(NoteDetailsVC(note: NoteModel()), animated: true)
     }
     //MARK: - SetupViews -
     func setupViews(){
         view.addSubview(tableView)
         tableView.fillSuperview()
+
+        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(customView: addNewNoteButton)
     }
     //MARK: - UI Components -
     let tableView: UITableView = {
@@ -49,6 +55,13 @@ class NotesVC: UIViewController{
         tableView.tableFooterView = UIView()
         tableView.showsVerticalScrollIndicator = false
         return tableView
+    }()
+    lazy var addNewNoteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("+", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+        return button
     }()
 }
 
@@ -68,10 +81,16 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.IDENTIFIER, for: indexPath) as! NoteTableViewCell
+        cell.data = data[indexPath.row]
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return data.isEmpty ? view.frame.height : 70
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !data.isEmpty{
+         self.navigationController?.pushViewController(NoteDetailsVC(note: data[indexPath.row]), animated: true)
+        }
     }
    
 }

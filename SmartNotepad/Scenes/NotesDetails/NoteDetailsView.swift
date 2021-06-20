@@ -8,7 +8,24 @@
 import UIKit
 class NoteDetailsView: UIView, UITextViewDelegate{
     // MARK: - Properties -
+    var data: NoteModel?{
+        didSet{
+            guard let data = data else { return }
 
+            titleTextFeild.text = data.title
+            if let body = data.body, !body.isEmpty{
+                bodyTextView.text = body
+                textViewPLaceholderLabel.isHidden = true
+            }
+            if let address = data.address{
+                addLocationButton.setTitle(address, for: .normal)
+                addLocationButton.setTitleColor(.black, for: .normal)
+            }
+            if let imageData = data.image,  let image = UIImage(data: imageData){
+                self.setNoteImageView(image: image)
+            }
+        }
+    }
     // MARK: - Life cycle -
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,6 +44,16 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         noteImageView.isHidden = false
         addPhotoButton.isHidden = true
         self.layoutIfNeeded()
+    }
+    func getNoteModel() -> NoteModel{
+        if data == nil {
+            data = NoteModel()
+        }
+        data!.title = titleTextFeild.text
+        data!.body = bodyTextView.text
+        data!.address = (addLocationButton.titleColor(for: .normal) == .black) ?  addLocationButton.title(for: .normal) : nil
+        data!.image = noteImageView.image?.jpegData(compressionQuality: 0.5)
+        return data!
     }
     // MARK: - text view delegate -
     func textViewDidBeginEditing(_ textView: UITextView) {

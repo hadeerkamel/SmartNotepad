@@ -10,6 +10,17 @@ class NoteTableViewCell: UITableViewCell {
     //MARK: - Properties -
     static let IDENTIFIER = "NoteTableViewCell"
 
+    var data: NoteModel? {
+        didSet{
+            guard let data = data else { return }
+
+            titleLabel.text = data.title
+            bodyLabel.text = data.body
+
+            locationIconImageView.isHidden = (data.address == nil)
+            imageIconImageView.isHidden = (data.image == nil)
+        }
+    }
     //MARK: - Life cyce -
     override func awakeFromNib() {
         super.awakeFromNib()
