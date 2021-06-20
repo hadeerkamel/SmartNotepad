@@ -46,15 +46,21 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         self.layoutIfNeeded()
     }
     func getNoteModel() -> NoteModel{
-        if data == nil {
-            data = NoteModel()
-        }
-        data!.title = titleTextFeild.text
-        data!.body = bodyTextView.text
-        data!.address = (addLocationButton.titleColor(for: .normal) == .black) ?  addLocationButton.title(for: .normal) : nil
-        data!.image = noteImageView.image?.jpegData(compressionQuality: 0.5)
-        return data!
+
+        let note = NoteModel()
+        note.id = data?.id ?? -1
+
+
+        note.title = titleTextFeild.text
+        note.body = bodyTextView.text
+        note.address = (addLocationButton.titleColor(for: .normal) == .black) ?  addLocationButton.title(for: .normal) : nil
+        note.image = noteImageView.image?.jpegData(compressionQuality: 0.5)
+
+        note.lat = data?.lat ?? 0.0
+        note.lon = data?.lon ?? 0.0
+        return note
     }
+
     // MARK: - text view delegate -
     func textViewDidBeginEditing(_ textView: UITextView) {
         textViewPLaceholderLabel.isHidden = !(textView.text == nil || textView.text.isEmpty)

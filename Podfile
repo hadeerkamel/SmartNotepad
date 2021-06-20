@@ -5,9 +5,10 @@ target 'SmartNotepad' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-pod 'NVActivityIndicatorView'
+  pod 'NVActivityIndicatorView'
   pod 'IQKeyboardManagerSwift'
-pod 'SnapKit'
+  pod 'SnapKit'
+  pod 'RealmSwift'
 
   # Pods for SmartNotepad
 
