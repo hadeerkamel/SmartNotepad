@@ -7,8 +7,14 @@
 
 import UIKit
 import CoreLocation
+
+struct LocationData{
+    var lat: Double
+    var lon: Double
+    var address: String
+}
 protocol LocationManagerDelegate {
-    func userAddressUpdated(address: String)
+    func userAddressUpdated(data: LocationData)
     func alertToOpenSettings()
 }
 class LocationManager: NSObject, CLLocationManagerDelegate{
@@ -93,7 +99,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
                                                 addressString = addressString + pm.country!
                                             }
 
-                                            self.delegate.userAddressUpdated(address: addressString)
+                                            self.delegate.userAddressUpdated(data:  LocationData(lat: lat, lon: lon, address: addressString))
 
                                         }
                                     })

@@ -71,7 +71,7 @@ class NoteDetailsVC: UIViewController{
         let view = NoteDetailsView(frame: .zero)
         view.addLocationButton.addTarget(self, action: #selector(addLocationButtonDidTapped), for: .touchUpInside)
         view.addPhotoButton.addTarget(self, action: #selector(addPhotoButtonDidTapped), for: .touchUpInside)
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhotoButtonDidTapped)))
+        view.noteImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhotoButtonDidTapped)))
         return view
     }()
     lazy var deleteButton: UIButton = {

@@ -26,6 +26,14 @@ class NoteDetailsView: UIView, UITextViewDelegate{
             }
         }
     }
+    var locationData: LocationData? {
+        didSet{
+            guard let address = locationData?.address else{return}
+
+            self.addLocationButton.setTitle(address, for: .normal)
+            self.addLocationButton.setTitleColor(.black, for: .normal)
+        }
+    }
     // MARK: - Life cycle -
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,8 +64,8 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         note.address = (addLocationButton.titleColor(for: .normal) == .black) ?  addLocationButton.title(for: .normal) : nil
         note.image = noteImageView.image?.jpegData(compressionQuality: 0.5)
 
-        note.lat = data?.lat ?? 0.0
-        note.lon = data?.lon ?? 0.0
+        note.lat = locationData?.lat ?? data?.lat ?? 0.0
+        note.lon = locationData?.lon ?? data?.lon ?? 0.0
         return note
     }
 
@@ -193,11 +201,12 @@ class NoteDetailsView: UIView, UITextViewDelegate{
         button.contentHorizontalAlignment = .leading
         return button
     }()
-    private let noteImageView: UIImageView = {
+    lazy var noteImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .lightGray
         imageView.isHidden = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
 }

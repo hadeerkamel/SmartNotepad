@@ -7,10 +7,9 @@
 
 import UIKit
 extension NoteDetailsVC: LocationManagerDelegate{
-    func userAddressUpdated(address: String) {
+    func userAddressUpdated(data: LocationData) {
         DispatchQueue.main.async {
-            self.mainView.addLocationButton.setTitle(address, for: .normal)
-            self.mainView.addLocationButton.setTitleColor(.black, for: .normal)
+            self.mainView.locationData = data
         }
     }
 
