@@ -10,7 +10,7 @@ import RealmSwift
 
 class NotesVC: UIViewController{
     //MARK: - Propertis -
-    var data: Results<NoteModel> = NotesPresistance.notes
+    var data: [NoteModel] = []
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class NotesVC: UIViewController{
         self.title = "Notes"
 
         print(NotesPresistance.realm.configuration.fileURL)
-        
+
         tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: NoteTableViewCell.IDENTIFIER)
         tableView.register(NoNotesTableViewCell.self, forCellReuseIdentifier: NoNotesTableViewCell.IDENTIFIER)
 
@@ -31,7 +31,7 @@ class NotesVC: UIViewController{
 
         self.navigationController?.setNavigationBarHidden(data.isEmpty, animated: false)
 
-        data = NotesPresistance.notes
+        data = NotesPresistance.sorted()
         tableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -86,6 +86,7 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource{
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.IDENTIFIER, for: indexPath) as! NoteTableViewCell
         cell.data = data[indexPath.row]
+        cell.nearstLabel.isHidden = (indexPath.row != 0)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

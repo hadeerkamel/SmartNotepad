@@ -92,7 +92,7 @@ class NoteTableViewCell: UITableViewCell {
         stackView.spacing = 15
         return stackView
     }()
-   private let nearstLabel: UILabel = {
+    let nearstLabel: UILabel = {
         let label = UILabel()
         label.textColor = #colorLiteral(red: 0.3144574165, green: 0.8099127412, blue: 0.4401344061, alpha: 1)
         label.text = "Nearest".localized()

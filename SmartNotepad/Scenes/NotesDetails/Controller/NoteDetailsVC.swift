@@ -29,7 +29,10 @@ class NoteDetailsVC: UIViewController{
     }
     override func viewWillDisappear(_ animated: Bool) {
         if !deleted{
-            NotesPresistance.save(note: mainView.getNoteModel())
+            let model = mainView.getNoteModel()
+                if !model.isEmpty(){
+                    NotesPresistance.save(note: model)
+                }
         }
         super.viewWillDisappear(animated)
         

@@ -12,17 +12,32 @@ struct LocationData{
     var lat: Double
     var lon: Double
     var address: String
+
+    var location: CLLocation {
+        return CLLocation(latitude: self.lat, longitude: self.lon)
+    }
+
+    func distance(to location: CLLocation) -> CLLocationDistance {
+            return location.distance(from: self.location)
+    }
 }
 protocol LocationManagerDelegate {
     func userAddressUpdated(data: LocationData)
     func alertToOpenSettings()
 }
 class LocationManager: NSObject, CLLocationManagerDelegate{
+
     private var locationManager: CLLocationManager?
     private var checkLocationAuthStatusChange = false
-    private var delegate: LocationManagerDelegate
+    private var delegate: LocationManagerDelegate?
 
-    init(delegate: LocationManagerDelegate){
+    var currentLocation: CLLocation?{
+        get{
+           return locationManager?.location
+        }
+    }
+    
+    init(delegate: LocationManagerDelegate?){
         self.delegate = delegate
         super.init()
         locationManager = CLLocationManager()
@@ -35,7 +50,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
         if locationServiceAllowed() {
             getUserAddress()
         }else{
-            delegate.alertToOpenSettings()
+            delegate?.alertToOpenSettings()
         }
     }
     func requestAuthrization(){
@@ -57,7 +72,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
     internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if checkLocationAuthStatusChange{
             if status == .denied {
-                delegate.alertToOpenSettings()
+                delegate?.alertToOpenSettings()
                 checkLocationAuthStatusChange = false
             }
             else{
@@ -74,7 +89,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
         center.longitude = lon
 
         let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
-
 
         ceo.reverseGeocodeLocation(loc, completionHandler:
                                     {(placemarks, error) in
@@ -99,7 +113,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate{
                                                 addressString = addressString + pm.country!
                                             }
 
-                                            self.delegate.userAddressUpdated(data:  LocationData(lat: lat, lon: lon, address: addressString))
+                                            self.delegate?.userAddressUpdated(data:  LocationData(lat: lat, lon: lon, address: addressString))
 
                                         }
                                     })

@@ -36,7 +36,8 @@ class NoteModel: Object{
 }
 class NotesPresistance{
     static let realm = try! Realm()
-    static var notes: Results<NoteModel> = { realm.objects(NoteModel.self) }()
+    static private var notes: Results<NoteModel> = { realm.objects(NoteModel.self) }()
+
 
     static func save(note: NoteModel){
         if note.isEmpty(){
@@ -56,9 +57,31 @@ class NotesPresistance{
             realm.delete(note)
         }
     }
-    static func edit(note: NoteModel, editedNote: NoteModel){
-        try! realm.write(){
-            note.copy(from: editedNote)
+    static func sorted() -> [NoteModel]{
+
+        var sortedByLocation = sortByNearest()
+        var data:[NoteModel] = []
+        if let nearest = sortedByLocation.first {
+            data = [nearest]
+        }
+        sortedByLocation.removeFirst()
+
+
+        let sortedByDate = sortedByLocation.sorted { (note1, note2) -> Bool in
+            return note1.createdDate > note2.createdDate
+        }
+
+        data.append(contentsOf: sortedByDate)
+
+        return data
+    }
+
+    static func sortByNearest() -> [NoteModel]{
+        let locationManager = LocationManager(delegate: nil)
+        if let currentLocation = locationManager.currentLocation{
+            return notes.sorted(by: { LocationData(lat: $0.lat, lon: $0.lon, address: "").distance(to: currentLocation) < LocationData(lat: $1.lat, lon: $1.lon, address: "").distance(to: currentLocation) })
+        }else{
+            return Array(notes)
         }
     }
 }
