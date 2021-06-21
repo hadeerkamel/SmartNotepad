@@ -12,7 +12,8 @@ class NoteDetailsVC: UIViewController{
     //MARK: - Properties -
     var locationManager: LocationManager?
     var imageSelector: ImageSelector?
-    var deleted = false
+    var presener: NoteDetailsPresenter?
+
     //MARK: - Life cycle
     init(note: NoteModel?){
         super.init(nibName: nil, bundle: nil)
@@ -26,16 +27,11 @@ class NoteDetailsVC: UIViewController{
         super.viewDidLoad()
         imageSelector = ImageSelectorImpl()
         locationManager = LocationManager(delegate: self)
+        presener = NoteDetailsPresenterImpl(view: self)
     }
     override func viewWillDisappear(_ animated: Bool) {
-        if !deleted{
-            let model = mainView.getNoteModel()
-                if !model.isEmpty(){
-                    NotesPresistance.save(note: model)
-                }
-        }
+        presener?.saveBeforeDisappearing()
         super.viewWillDisappear(animated)
-        
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -51,11 +47,7 @@ class NoteDetailsVC: UIViewController{
         imageSelector?.pickImage(with: inputs)
     }
     @objc func deleteButtonDidTapped(){
-        if let note = mainView.data, !note.isEmpty(){
-            NotesPresistance.delete(note: note)
-            deleted = true
-            self.navigationController?.popViewController(animated: true)
-        }
+        presener?.deleteNote()
     }
     //MARK: - SetupViews -
     func setupViews(){

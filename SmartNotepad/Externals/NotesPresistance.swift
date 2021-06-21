@@ -64,7 +64,9 @@ class NotesPresistance{
         if let nearest = sortedByLocation.first {
             data = [nearest]
         }
-        sortedByLocation.removeFirst()
+        if !sortedByLocation.isEmpty {
+            sortedByLocation.removeFirst()
+        }
 
 
         let sortedByDate = sortedByLocation.sorted { (note1, note2) -> Bool in
