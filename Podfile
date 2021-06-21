@@ -9,6 +9,8 @@ target 'SmartNotepad' do
   pod 'IQKeyboardManagerSwift'
   pod 'SnapKit'
   pod 'RealmSwift'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 
   # Pods for SmartNotepad
 

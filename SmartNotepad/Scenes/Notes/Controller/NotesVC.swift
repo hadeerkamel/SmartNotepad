@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class NotesVC: UIViewController{
     //MARK: - Propertis -
-    var data: [NoteModel] = []
     var presenter: NotesPresenter?
+    var data: BehaviorRelay<[NoteModel]> = BehaviorRelay(value: [])
+    var disposeBag = DisposeBag()
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +25,7 @@ class NotesVC: UIViewController{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(data.isEmpty, animated: false)
+        self.navigationController?.setNavigationBarHidden((data.value.count == 1 && data.value[0].isEmpty()), animated: false)
         presenter?.presentNotes()
     }
     override func viewWillDisappear(_ animated: Bool) {

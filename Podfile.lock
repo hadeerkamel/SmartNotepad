@@ -8,12 +8,20 @@ PODS:
   - Realm/Headers (10.7.7)
   - RealmSwift (10.7.7):
     - Realm (= 10.7.7)
+  - RxCocoa (6.2.0):
+    - RxRelay (= 6.2.0)
+    - RxSwift (= 6.2.0)
+  - RxRelay (6.2.0):
+    - RxSwift (= 6.2.0)
+  - RxSwift (6.2.0)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
   - IQKeyboardManagerSwift
   - NVActivityIndicatorView
   - RealmSwift
+  - RxCocoa
+  - RxSwift
   - SnapKit
 
 SPEC REPOS:
@@ -22,6 +30,9 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - Realm
     - RealmSwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SnapKit
 
 SPEC CHECKSUMS:
@@ -29,8 +40,11 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   Realm: 8010af8b7a576ba501729bcbc54a3cd1f1f7dca3
   RealmSwift: dc17e6d649c12a8996f9e962c3fe6cef356885c4
+  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
+  RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 92c77fea3bf8d258849270ceff021dc49e3c2715
+PODFILE CHECKSUM: df8c36dfbde1a39652df2679222349f4da359b2b
 
 COCOAPODS: 1.10.1
